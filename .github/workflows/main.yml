@@ -18,8 +18,7 @@ jobs:
           sudo apt-get install -y build-essential  # Install build tools (gcc, g++, make, etc.)
           sudo apt-get install -y cmake  # Install CMake if not already available
 
-      - name: Configure the project
-        run: cmake -S . -B build
-
-      - name: Build the project
-        run: cmake --build build --target all  # Build all targets
+      - name: run cmd
+        run: |
+        cmake -S . -B build
+        cd build && make all
