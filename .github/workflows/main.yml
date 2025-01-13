@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest  # Use the latest Windows environment
+    runs-on: ubuntu-latest  # Use the latest Ubuntu environment
 
     steps:
       - name: Checkout code
@@ -20,4 +20,4 @@ jobs:
         run: cmake -S . -B build
 
       - name: Build the project
-        run: cmake --build build --config Release  # Use 'Debug' if you want to build in debug mode
+        run: cmake --build build --target all  # Build all targets
