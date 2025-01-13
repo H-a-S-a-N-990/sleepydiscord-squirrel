@@ -1,0 +1,23 @@
+name: CMake Build
+
+on:
+  workflow_dispatch:  # Allows manual triggering of the workflow
+
+jobs:
+  build:
+    runs-on: windows-latest  # Use the latest Windows environment
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v1
+        with:
+          cmake-version: '3.6'  # Specify the CMake version you need
+
+      - name: Configure the project
+        run: cmake -S . -B build
+
+      - name: Build the project
+        run: cmake --build build --config Release  # Use 'Debug' if you want to build in debug mode
