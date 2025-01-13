@@ -11,10 +11,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up CMake
-        uses: jwlawson/actions-setup-cmake@v1
-        with:
-          cmake-version: '3.6'  # Specify the CMake version you need
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libidn11-dev  # Install the required library
+          sudo apt-get install -y build-essential  # Install build tools (gcc, g++, make, etc.)
+          sudo apt-get install -y cmake  # Install CMake if not already available
 
       - name: Configure the project
         run: cmake -S . -B build
