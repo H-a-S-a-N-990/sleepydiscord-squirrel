@@ -1,37 +1,28 @@
-name: Build and Release
+name: CMake Build
 
 on:
   push:
-    tags:
-      - 'v*'  # Trigger on version tags (e.g., v1.0.0)
+    branches:
+      - main  # Change this to your default branch if it's not 'main'
+  pull_request:
+    branches:
+      - main  # Change this to your default branch if it's not 'main'
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Set up CMake
-      uses: jwlawson/actions-setup-cmake@v1
-      with:
-        cmake-version: '3.21.2'  # Specify the CMake version you need
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v1
+        with:
+          cmake-version: '3.6'  # Specify the CMake version you need
 
-    - name: Build with CMake
-      run: |
-        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-        cmake --build build --target all
+      - name: Configure the project
+        run: cmake -S . -B build
 
-    - name: Package Release Artifacts
-      run: |
-        mkdir -p release
-        cp build/your_executable release/  # Replace 'your_executable' with the actual output file name
-
-    - name: Create Release
-      uses: softprops/action-gh-release@v1
-      with:
-        tag_name: ${{ github.ref }}
-        files: release/*
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build the project
+        run: cmake --build build --target all
