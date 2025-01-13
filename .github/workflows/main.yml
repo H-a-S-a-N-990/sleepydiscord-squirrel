@@ -14,11 +14,14 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y libidn11-dev  # Install the required library
-          sudo apt-get install -y build-essential  # Install build tools (gcc, g++, make, etc.)
-          sudo apt-get install -y cmake  # Install CMake if not already available
+          sudo apt-get install -y \
+            libidn11-dev \      # Install the required library
+            libcurl4-openssl-dev \  # Install Curl development files
+            libssl-dev \        # Install OpenSSL development files
+            build-essential      # Install build tools (gcc, g++, make, etc.)
 
-      - name: run cmd
-        run: |
-        cmake -S . -B build
-        cd build && make all
+      - name: Configure the project
+        run: cmake -S . -B build
+
+      - name: Build the project
+        run: cmake --build build --target all  # Build all targets
